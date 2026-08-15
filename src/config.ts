@@ -5,12 +5,12 @@ export const questions = [
     prompt:
       "Ketua Panitia Natal seperti apa yang kamu harapkan? Coba deskripsikan sedikit.",
     placeholder:
-      "Misalnya: tegas tapi ramah, rapi koordinasinya, bisa ngajak orang, nggak gampang panik…",
+      "Misalnya: tegas tapi ramah, koordinasinya oke, bisa ngajak orang, nggak gampang panik…",
     required: true,
   },
   {
     prompt: "Ada saran nama? Sebutkan di bawah.",
-    placeholder: "Boleh kosong kalau belum ada. Satu nama atau beberapa, juga oke.",
+    placeholder: "Boleh satu atau beberapa. Kosong juga sebenarnya boleh, tapi isi aja plis :)",
     required: false,
   },
 ] as const;

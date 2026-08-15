@@ -28,7 +28,7 @@
     <div class="glow glow-left" aria-hidden="true"></div>
     <div class="glow glow-right" aria-hidden="true"></div>
     <main class="wrap">
-      <p class="kicker">🎄 Survei angkatan · anonim 🎁</p>
+      <p class="kicker">🎄 Survei angkatan · Ingenium 🎁</p>
       <section class="card">
         <div class="lights" aria-hidden="true">
           <span></span><span></span><span></span><span></span><span></span>
@@ -43,21 +43,22 @@
         </div>
         <div id="form-view">
           <p class="hat" aria-hidden="true">🎅</p>
-          <h1>Ketua panitia Natal-nya, yang kayak apa?</h1>
+          <h1>We are looking for : </h1>
+          <h1>Ketua Panitia Natal Paryasop!</h1>
           <p class="lede">
-            Angkatan lagi kumpulin pendapat. Nggak perlu nama kamu — cuma
-            gambaran ketua yang kamu mau, plus saran nama kalau ada.
+            Berhubung natal sudah semakin dekat, Ingenium butuh ketua panitia untuk Natal Paryasop nih —
+            soo, luangin waktu untuk ngisi form ini ya!
           </p>
           <div class="anon-row">
-            <p class="anon">Anonim banget · yang nulis nggak ketahuan</p>
+            <p class="anon">Anonim kok · jadi aman ajah :D</p>
           </div>
           <div id="setup-warn" class="setup-warn" hidden>
-            Endpoint Google Apps Script belum dikonfigurasi. Isi
-            <code>VITE_APPS_SCRIPT_URL</code> atau <code>src/config.ts</code>.
+            There is something wrong with the form. Please try again later.
+            <code>Beep Boop</code> atau <code>Beep Boop</code>.
           </div>
           <form id="form" novalidate>
             <div class="field">
-              <div class="q-num" id="q-num-1">Pertanyaan 1 · wajib</div>
+              <div class="q-num" id="q-num-1">Pertanyaan 1 · (wajib diisi)</div>
               <label for="q1" id="label-q1"></label>
               <textarea
                 id="q1"
@@ -66,12 +67,12 @@
                 aria-describedby="q-num-1 meta-q1"
               ></textarea>
               <div class="meta" id="meta-q1">
-                <span>Bebas jujur, bebas panjang</span>
+                <span>Intinya yang menggambarkan ketua harapan kamu.</span>
                 <span><span id="count-q1">0</span> karakter</span>
               </div>
             </div>
             <div class="field">
-              <div class="q-num" id="q-num-2">Pertanyaan 2 · boleh kosong</div>
+              <div class="q-num" id="q-num-2">Pertanyaan 2 · (sebaiknya diisi)</div>
               <label for="q2" id="label-q2"></label>
               <textarea
                 id="q2"
@@ -79,7 +80,7 @@
                 aria-describedby="q-num-2 meta-q2"
               ></textarea>
               <div class="meta" id="meta-q2">
-                <span>Nggak wajib. Kosong juga dihitung sebagai “tidak ada saran”.</span>
+                <span>Gausah takut nyebut ya, inget ini anonim.</span>
                 <span><span id="count-q2">0</span> karakter</span>
               </div>
             </div>
@@ -92,8 +93,8 @@
               tabindex="-1"
               autocomplete="off"
             />
-            <button type="submit" id="submit-btn">Kirim ke kotak Natal</button>
-            <p class="note">Satu kali kirim per orang sudah cukup. Ho ho ho.</p>
+            <button type="submit" id="submit-btn">Submit Suggestion 🚀</button>
+            <p class="note">Multiple submissions are allowed 📝</p>
             <div id="error" class="error" role="alert" hidden></div>
           </form>
         </div>
@@ -106,10 +107,10 @@
           </p>
         </div>
       </section>
-      <p class="site-footer">Rahasia angkatan · bukan voting resmi · cuma dengar-dengar</p>
+      <p class="site-footer">w/ love from Ingenium 💖</p>
     </main>
     <noscript>
-      <p class="noscript">Form ini memerlukan JavaScript untuk mengirim pendapat.</p>
+      <p class="noscript">JavaScript is required to submit the form.</p>
     </noscript>
     <script type="module" src="/src/main.ts"></script>
   </body>

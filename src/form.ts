@@ -76,7 +76,7 @@ function showDone(formView: HTMLElement, done: HTMLElement): void {
 function resetSubmit(button: HTMLButtonElement): void {
   button.disabled = false;
   button.removeAttribute("aria-busy");
-  button.textContent = "Kirim ke kotak Natal";
+  button.textContent = "Submit Suggestion 🚀";
 }
 
 export function initForm(): void {
@@ -105,7 +105,7 @@ export function initForm(): void {
     const q2 = ui.q2.value.trim() || NO_NAME_SUGGESTION;
 
     if (!q1) {
-      showError(ui.error, "Gambaran ketuanya masih kosong. Isi dulu, ya.");
+      showError(ui.error, "Yang wajib isi dulu hey.");
       ui.q1.focus();
       return;
     }

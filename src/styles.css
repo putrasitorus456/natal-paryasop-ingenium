@@ -242,11 +242,15 @@ h1 {
 .anon-row {
   display: flex;
   justify-content: center;
+  align-items: center;
+  text-align: center;
 }
 
 .anon {
   display: inline-flex;
   align-items: center;
+  justify-content: center;
+  width: fit-content;
   gap: 8px;
   background: #d1fae5;
   color: var(--ok);
@@ -254,8 +258,9 @@ h1 {
   font-weight: 800;
   padding: 7px 14px;
   border-radius: 999px;
-  margin: 0 0 22px;
+  margin: 0 auto 22px;
   border: 2px dashed #34d399;
+  text-align: center;
 }
 
 .field {
@@ -303,11 +308,22 @@ textarea:focus-visible {
 .meta {
   display: flex;
   justify-content: space-between;
-  gap: 12px;
+  align-items: baseline;
+  gap: 8px;
   margin-top: 6px;
   font-size: 0.78rem;
   color: var(--muted);
   font-weight: 700;
+}
+
+.meta span:first-child {
+  flex: 1;
+  min-width: 0;
+}
+
+.meta span:last-child {
+  flex-shrink: 0;
+  white-space: nowrap;
 }
 
 .hp {
@@ -468,9 +484,13 @@ button[type="submit"]:disabled {
     display: none;
   }
 
-  .meta {
-    flex-direction: column;
-    gap: 2px;
+  .lede {
+    font-size: 0.8rem;
+    line-height: 1.45;
+  }
+
+  textarea::placeholder {
+    font-size: 0.78rem;
   }
 }
 
