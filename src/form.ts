@@ -9,6 +9,14 @@ import {
   submitAnswers,
 } from "./lib/sheets-client";
 
+const LOADING_MESSAGES = [
+  "Packing suggestion…",
+  "Giving red ribbon…",
+  "Throwing to the chimney…",
+];
+const MESSAGE_INTERVAL_MS = 1800;
+const MIN_LOADING_MS = MESSAGE_INTERVAL_MS * LOADING_MESSAGES.length;
+
 type FormElements = {
   form: HTMLFormElement;
   formView: HTMLElement;
@@ -19,6 +27,9 @@ type FormElements = {
   q1: HTMLTextAreaElement;
   q2: HTMLTextAreaElement;
   honeypot: HTMLInputElement;
+  overlay: HTMLElement;
+  statusCopy: HTMLElement;
+  card: HTMLElement;
 };
 
 function requiredElement<T extends HTMLElement>(id: string): T {
@@ -30,6 +41,11 @@ function requiredElement<T extends HTMLElement>(id: string): T {
 }
 
 function collectElements(): FormElements {
+  const card = document.querySelector(".card");
+  if (!(card instanceof HTMLElement)) {
+    throw new Error("Missing .card");
+  }
+
   return {
     form: requiredElement<HTMLFormElement>("form"),
     formView: requiredElement("form-view"),
@@ -40,6 +56,9 @@ function collectElements(): FormElements {
     q1: requiredElement<HTMLTextAreaElement>("q1"),
     q2: requiredElement<HTMLTextAreaElement>("q2"),
     honeypot: requiredElement<HTMLInputElement>("website"),
+    overlay: requiredElement("status-overlay"),
+    statusCopy: requiredElement("status-copy"),
+    card,
   };
 }
 
@@ -62,21 +81,73 @@ function bindField(
   update();
 }
 
-function showError(error: HTMLElement, message: string): void {
-  error.textContent = message;
-  error.hidden = false;
+function replay(el: HTMLElement, className: string): void {
+  el.classList.remove(className);
+  void el.offsetWidth;
+  el.classList.add(className);
 }
 
-function showDone(formView: HTMLElement, done: HTMLElement): void {
-  formView.hidden = true;
-  done.hidden = false;
-  done.focus();
+function prefersReducedMotion(): boolean {
+  return window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 }
 
-function resetSubmit(button: HTMLButtonElement): void {
-  button.disabled = false;
-  button.removeAttribute("aria-busy");
-  button.textContent = "Submit Suggestion 🚀";
+function wait(ms: number): Promise<void> {
+  return new Promise((resolve) => {
+    window.setTimeout(resolve, ms);
+  });
+}
+
+function startLoading(ui: FormElements): () => void {
+  ui.error.hidden = true;
+  ui.error.classList.remove("is-in");
+  ui.submitBtn.disabled = true;
+  ui.submitBtn.setAttribute("aria-busy", "true");
+  ui.submitBtn.classList.add("is-busy");
+  ui.formView.classList.add("is-dimmed");
+  ui.overlay.hidden = false;
+  ui.overlay.classList.remove("is-out");
+  replay(ui.overlay, "is-in");
+  ui.statusCopy.textContent = LOADING_MESSAGES[0] ?? "Mengirim…";
+
+  if (prefersReducedMotion()) {
+    return () => undefined;
+  }
+
+  let index = 0;
+  const timer = window.setInterval(() => {
+    index = (index + 1) % LOADING_MESSAGES.length;
+    ui.statusCopy.textContent = LOADING_MESSAGES[index] ?? "Mengirim…";
+    replay(ui.statusCopy, "is-swap");
+  }, MESSAGE_INTERVAL_MS);
+
+  return () => {
+    window.clearInterval(timer);
+  };
+}
+
+function stopLoading(ui: FormElements): void {
+  ui.overlay.classList.remove("is-in");
+  ui.overlay.hidden = true;
+  ui.formView.classList.remove("is-dimmed");
+  ui.submitBtn.classList.remove("is-busy");
+}
+
+function showError(ui: FormElements, message: string): void {
+  stopLoading(ui);
+  ui.submitBtn.disabled = false;
+  ui.submitBtn.removeAttribute("aria-busy");
+  ui.error.textContent = message;
+  ui.error.hidden = false;
+  replay(ui.error, "is-in");
+  replay(ui.card, "is-shake");
+}
+
+function showDone(ui: FormElements): void {
+  stopLoading(ui);
+  ui.formView.hidden = true;
+  ui.done.hidden = false;
+  replay(ui.done, "is-in");
+  ui.done.focus();
 }
 
 export function initForm(): void {
@@ -95,9 +166,10 @@ export function initForm(): void {
   ui.form.addEventListener("submit", async (event) => {
     event.preventDefault();
     ui.error.hidden = true;
+    ui.error.classList.remove("is-in");
 
     if (ui.honeypot.value.trim()) {
-      showDone(ui.formView, ui.done);
+      showDone(ui);
       return;
     }
 
@@ -105,34 +177,39 @@ export function initForm(): void {
     const q2 = ui.q2.value.trim() || NO_NAME_SUGGESTION;
 
     if (!q1) {
-      showError(ui.error, "Yang wajib isi dulu hey.");
+      showError(ui, "Yang wajib isi dulu hey.");
       ui.q1.focus();
       return;
     }
 
     if (!isEndpointConfigured(scriptUrl)) {
       showError(
-        ui.error,
+        ui,
         "Form belum tersambung ke Google Sheets. Isi VITE_APPS_SCRIPT_URL atau src/config.ts.",
       );
       return;
     }
 
-    ui.submitBtn.disabled = true;
-    ui.submitBtn.setAttribute("aria-busy", "true");
-    ui.submitBtn.textContent = "Mengirim…";
+    const stopMessages = startLoading(ui);
 
     try {
-      await submitAnswers(scriptUrl, {
-        q1,
-        q2,
-        question1: questions[0].prompt,
-        question2: questions[1].prompt,
-      });
-      showDone(ui.formView, ui.done);
+      await Promise.all([
+        submitAnswers(scriptUrl, {
+          q1,
+          q2,
+          question1: questions[0].prompt,
+          question2: questions[1].prompt,
+        }),
+        wait(prefersReducedMotion() ? 0 : MIN_LOADING_MS),
+      ]);
+      stopMessages();
+      showDone(ui);
     } catch {
-      showError(ui.error, "Gagal mengirim. Coba lagi, jangan sampai nyangkut di cerobong.");
-      resetSubmit(ui.submitBtn);
+      stopMessages();
+      showError(
+        ui,
+        "Gagal mengirim. Coba lagi, jangan sampai nyangkut di cerobong.",
+      );
     }
   });
 }

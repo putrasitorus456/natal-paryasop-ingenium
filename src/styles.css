@@ -335,6 +335,7 @@ textarea:focus-visible {
 }
 
 button[type="submit"] {
+  position: relative;
   width: 100%;
   margin-top: 8px;
   border: 0;
@@ -346,6 +347,27 @@ button[type="submit"] {
   cursor: pointer;
   box-shadow: 0 8px 0 var(--berry-dark), 0 12px 18px rgb(159 18 50 / 28%);
   transition: transform 0.12s, box-shadow 0.12s;
+  overflow: hidden;
+}
+
+.btn-busy {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+button[type="submit"].is-busy .btn-label {
+  display: none;
+}
+
+button[type="submit"].is-busy .btn-busy {
+  display: inline-flex;
+}
+
+.btn-sled {
+  display: inline-block;
+  animation: sled-run 0.7s ease-in-out infinite;
 }
 
 button[type="submit"]:hover:not(:disabled) {
@@ -363,9 +385,7 @@ button[type="submit"]:focus-visible {
 }
 
 button[type="submit"]:disabled {
-  opacity: 0.7;
   cursor: wait;
-  box-shadow: none;
 }
 
 .note {
@@ -386,19 +406,158 @@ button[type="submit"]:disabled {
   font-weight: 700;
 }
 
+.error.is-in {
+  animation: error-in 0.45s ease;
+}
+
+#form-view.is-dimmed {
+  opacity: 0.28;
+  pointer-events: none;
+  filter: blur(1px);
+  transition: opacity 0.25s, filter 0.25s;
+}
+
+.status-overlay {
+  position: absolute;
+  inset: 18px 16px 16px;
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  background: rgb(255 246 234 / 92%);
+  border-radius: 24px;
+  z-index: 3;
+}
+
+.status-overlay:not([hidden]) {
+  display: flex;
+}
+
+.status-overlay.is-in {
+  animation: overlay-in 0.28s ease;
+}
+
+.status-copy {
+  margin: 0;
+  font-family: Fredoka, "Trebuchet MS", sans-serif;
+  font-size: 1.15rem;
+  font-weight: 600;
+  color: var(--berry-dark);
+  text-align: center;
+}
+
+.status-copy.is-swap {
+  animation: copy-swap 0.35s ease;
+}
+
+.gift-loader {
+  position: relative;
+  width: 92px;
+  height: 92px;
+}
+
+.gift {
+  position: relative;
+  width: 72px;
+  height: 72px;
+  margin: 12px auto 0;
+  animation: gift-bounce 0.7s ease-in-out infinite;
+}
+
+.gift-box {
+  position: absolute;
+  left: 8px;
+  right: 8px;
+  bottom: 0;
+  height: 44px;
+  background: var(--berry);
+  border-radius: 8px;
+  box-shadow: inset 0 -6px 0 rgb(0 0 0 / 12%);
+}
+
+.gift-box::before,
+.gift-lid::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 0;
+  width: 10px;
+  height: 100%;
+  background: var(--gold);
+  transform: translateX(-50%);
+}
+
+.gift-lid {
+  position: absolute;
+  left: 2px;
+  right: 2px;
+  top: 10px;
+  height: 18px;
+  background: #e11d48;
+  border-radius: 6px;
+  z-index: 1;
+  animation: lid-wiggle 0.7s ease-in-out infinite;
+}
+
+.gift-lid::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: -10px;
+  width: 18px;
+  height: 14px;
+  border: 4px solid var(--gold);
+  border-bottom: 0;
+  border-radius: 12px 12px 0 0;
+  transform: translateX(-50%);
+}
+
+.spark {
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  background: var(--gold);
+  border-radius: 50%;
+  animation: sparkle 1s ease-in-out infinite;
+}
+
+.spark-1 {
+  left: 6px;
+  top: 8px;
+}
+
+.spark-2 {
+  right: 4px;
+  top: 18px;
+  animation-delay: 0.25s;
+}
+
+.spark-3 {
+  left: 40px;
+  top: 0;
+  animation-delay: 0.5s;
+}
+
 .done {
+  position: relative;
   text-align: center;
   padding: 36px 8px 18px;
+  overflow: hidden;
 }
 
 .done:focus {
   outline: none;
 }
 
+.done.is-in {
+  animation: success-pop 0.55s cubic-bezier(0.22, 1.2, 0.36, 1);
+}
+
 .done-tree {
   font-size: 3rem;
   margin: 0;
-  animation: bob 2.4s ease-in-out infinite;
+  animation: tree-pop 0.7s cubic-bezier(0.22, 1.2, 0.36, 1), bob 2.4s ease-in-out 0.7s infinite;
 }
 
 .done h2 {
@@ -413,6 +572,43 @@ button[type="submit"]:disabled {
   line-height: 1.55;
   margin: 0;
   font-weight: 600;
+}
+
+.confetti {
+  pointer-events: none;
+  position: absolute;
+  inset: 0;
+}
+
+.confetti i {
+  position: absolute;
+  top: 18%;
+  left: 50%;
+  width: 8px;
+  height: 12px;
+  border-radius: 2px;
+  opacity: 0;
+}
+
+.done.is-in .confetti i {
+  animation: confetti-burst 0.95s ease-out forwards;
+}
+
+.confetti i:nth-child(1) { --dx: -120px; --rot: -80deg; background: #e11d48; animation-delay: 0.02s; }
+.confetti i:nth-child(2) { --dx: -70px; --rot: 40deg; background: #f4c430; animation-delay: 0.05s; }
+.confetti i:nth-child(3) { --dx: -20px; --rot: -20deg; background: #22c55e; animation-delay: 0.08s; }
+.confetti i:nth-child(4) { --dx: 30px; --rot: 70deg; background: #38bdf8; animation-delay: 0.04s; }
+.confetti i:nth-child(5) { --dx: 80px; --rot: -50deg; background: #e11d48; animation-delay: 0.1s; }
+.confetti i:nth-child(6) { --dx: 130px; --rot: 25deg; background: #f4c430; animation-delay: 0.06s; }
+.confetti i:nth-child(7) { --dx: -100px; --rot: 90deg; background: #a78bfa; animation-delay: 0.12s; }
+.confetti i:nth-child(8) { --dx: -40px; --rot: -100deg; background: #22c55e; animation-delay: 0.09s; }
+.confetti i:nth-child(9) { --dx: 10px; --rot: 15deg; background: #fb7185; animation-delay: 0.14s; }
+.confetti i:nth-child(10) { --dx: 60px; --rot: -70deg; background: #38bdf8; animation-delay: 0.07s; }
+.confetti i:nth-child(11) { --dx: 110px; --rot: 55deg; background: #22c55e; animation-delay: 0.11s; }
+.confetti i:nth-child(12) { --dx: -10px; --rot: -30deg; background: #f4c430; animation-delay: 0.03s; }
+
+.card.is-shake {
+  animation: card-shake 0.5s ease;
 }
 
 .setup-warn {
@@ -474,6 +670,157 @@ button[type="submit"]:disabled {
   }
 }
 
+@keyframes sled-run {
+  0%,
+  100% {
+    transform: translateX(-4px) rotate(-8deg);
+  }
+
+  50% {
+    transform: translateX(4px) rotate(8deg);
+  }
+}
+
+@keyframes overlay-in {
+  from {
+    opacity: 0;
+    transform: scale(0.96);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes gift-bounce {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+@keyframes lid-wiggle {
+  0%,
+  100% {
+    transform: rotate(-4deg);
+  }
+
+  50% {
+    transform: rotate(5deg);
+  }
+}
+
+@keyframes sparkle {
+  0%,
+  100% {
+    opacity: 0.2;
+    transform: scale(0.6);
+  }
+
+  50% {
+    opacity: 1;
+    transform: scale(1.15);
+  }
+}
+
+@keyframes copy-swap {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes success-pop {
+  from {
+    opacity: 0;
+    transform: scale(0.86) translateY(12px);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+@keyframes tree-pop {
+  0% {
+    transform: scale(0.4) rotate(-12deg);
+  }
+
+  70% {
+    transform: scale(1.12) rotate(6deg);
+  }
+
+  100% {
+    transform: scale(1) rotate(0);
+  }
+}
+
+@keyframes confetti-burst {
+  0% {
+    opacity: 1;
+    transform: translate(0, 0) rotate(0);
+  }
+
+  100% {
+    opacity: 0;
+    transform: translate(var(--dx), 90px) rotate(var(--rot));
+  }
+}
+
+@keyframes error-in {
+  0% {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+
+  60% {
+    transform: translateX(-4px);
+  }
+
+  80% {
+    transform: translateX(4px);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes card-shake {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+
+  20% {
+    transform: translateX(-8px);
+  }
+
+  40% {
+    transform: translateX(8px);
+  }
+
+  60% {
+    transform: translateX(-5px);
+  }
+
+  80% {
+    transform: translateX(5px);
+  }
+}
+
 @media (max-width: 480px) {
   .card {
     padding: 40px 18px 22px;
@@ -499,6 +846,16 @@ button[type="submit"]:disabled {
   .lights span,
   .hat,
   .done-tree,
+  .gift,
+  .gift-lid,
+  .spark,
+  .btn-sled,
+  .status-overlay,
+  .status-copy,
+  .done,
+  .confetti i,
+  .error,
+  .card,
   button[type="submit"],
   textarea {
     animation: none;
@@ -507,5 +864,9 @@ button[type="submit"]:disabled {
 
   button[type="submit"]:hover:not(:disabled) {
     transform: none;
+  }
+
+  #form-view.is-dimmed {
+    filter: none;
   }
 }

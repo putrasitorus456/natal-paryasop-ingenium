@@ -93,18 +93,40 @@
               tabindex="-1"
               autocomplete="off"
             />
-            <button type="submit" id="submit-btn">Submit Suggestion 🚀</button>
+            <button type="submit" id="submit-btn">
+              <span class="btn-label">Submit Suggestion 🚀</span>
+              <span class="btn-busy" aria-hidden="true">
+                <span class="btn-sled">🛷</span>
+                Mengirim…
+              </span>
+            </button>
             <p class="note">Multiple submissions are allowed 📝</p>
             <div id="error" class="error" role="alert" hidden></div>
           </form>
         </div>
         <div id="done" class="done" hidden tabindex="-1">
+          <div class="confetti" aria-hidden="true">
+            <i></i><i></i><i></i><i></i><i></i><i></i>
+            <i></i><i></i><i></i><i></i><i></i><i></i>
+          </div>
           <p class="done-tree" aria-hidden="true">🎄</p>
           <h2>Yey, sudah masuk!</h2>
           <p>
             Terima kasih udah berpartisipasi yaa — kalau mau
             submit lagi boleh, tapi kalau isinya sama, ya cukup sekali ajaa :D
           </p>
+        </div>
+        <div id="status-overlay" class="status-overlay" hidden>
+          <div class="gift-loader" aria-hidden="true">
+            <span class="spark spark-1"></span>
+            <span class="spark spark-2"></span>
+            <span class="spark spark-3"></span>
+            <div class="gift">
+              <div class="gift-lid"></div>
+              <div class="gift-box"></div>
+            </div>
+          </div>
+          <p id="status-copy" class="status-copy">Membungkus saranmu…</p>
         </div>
       </section>
       <p class="site-footer">w/ love from Ingenium 💖</p>
