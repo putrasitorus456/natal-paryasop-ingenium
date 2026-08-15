@@ -1,0 +1,15 @@
+{
+  "name": "natal-paryasop",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc --noEmit && vite build",
+    "preview": "vite preview"
+  },
+  "devDependencies": {
+    "typescript": "~5.9.2",
+    "vite": "^6.3.5"
+  }
+}

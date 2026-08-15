@@ -1,0 +1,491 @@
+:root {
+  --pine: #0f3d2e;
+  --pine-deep: #07261c;
+  --berry: #c81e3a;
+  --berry-dark: #9f1232;
+  --gold: #f4c430;
+  --cream: #fff6ea;
+  --cream-2: #ffe8c8;
+  --ink: #2a1810;
+  --muted: #6b4e3d;
+  --line: #f0c9a0;
+  --ok: #157a4b;
+  --snow: #f8fbff;
+  --shadow: 0 28px 50px rgb(0 20 12 / 42%);
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  min-height: 100%;
+}
+
+body {
+  font-family: Nunito, "Segoe UI", sans-serif;
+  color: var(--ink);
+  background:
+    radial-gradient(ellipse at 15% 0%, #1c6b3a 0%, transparent 42%),
+    radial-gradient(ellipse at 90% 8%, #8b1e2d 0%, transparent 38%),
+    linear-gradient(180deg, var(--pine) 0%, var(--pine-deep) 100%);
+  display: flex;
+  justify-content: center;
+  padding: 28px 16px 52px;
+  overflow-x: hidden;
+}
+
+::selection {
+  background: #ffd4a8;
+  color: var(--ink);
+}
+
+.sky {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.snowflake {
+  position: absolute;
+  top: -20px;
+  color: var(--snow);
+  animation: snowfall linear infinite;
+  text-shadow: 0 0 8px rgb(255 255 255 / 50%);
+}
+
+.glow {
+  position: fixed;
+  width: 220px;
+  height: 220px;
+  border-radius: 50%;
+  pointer-events: none;
+  filter: blur(40px);
+  opacity: 0.35;
+}
+
+.glow-left {
+  left: -40px;
+  bottom: 10%;
+  background: #e63757;
+}
+
+.glow-right {
+  right: -30px;
+  top: 18%;
+  background: var(--gold);
+}
+
+.wrap {
+  width: min(640px, 100%);
+  position: relative;
+  z-index: 1;
+}
+
+.kicker {
+  text-align: center;
+  color: #ffe7b3;
+  font-size: 0.92rem;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  margin: 0 0 16px;
+  text-shadow: 0 2px 0 rgb(0 0 0 / 25%);
+}
+
+.card {
+  position: relative;
+  background:
+    linear-gradient(180deg, var(--cream) 0%, var(--cream-2) 100%);
+  border-radius: 32px;
+  padding: 44px 28px 28px;
+  box-shadow: var(--shadow);
+  border: 4px solid #fff;
+  overflow: hidden;
+}
+
+.card::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto;
+  height: 10px;
+  background: repeating-linear-gradient(
+    -45deg,
+    var(--berry) 0 10px,
+    #fff 10px 20px
+  );
+}
+
+.lights {
+  display: flex;
+  justify-content: space-between;
+  gap: 4px;
+  margin: 6px 8px 10px;
+}
+
+.lights span {
+  width: 12px;
+  height: 16px;
+  border-radius: 50% 50% 40% 40%;
+  box-shadow: 0 8px 12px rgb(0 0 0 / 12%);
+  animation: twinkle 1.2s ease-in-out infinite alternate;
+}
+
+.lights span:nth-child(3n) {
+  background: #ff4d6d;
+  animation-delay: 0s;
+}
+
+.lights span:nth-child(3n + 1) {
+  background: #ffe566;
+  animation-delay: 0.25s;
+}
+
+.lights span:nth-child(3n + 2) {
+  background: #4ade80;
+  animation-delay: 0.5s;
+}
+
+.holly {
+  position: absolute;
+  top: 28px;
+  width: 48px;
+  height: 48px;
+  pointer-events: none;
+}
+
+.holly-left {
+  left: 14px;
+}
+
+.holly-right {
+  right: 14px;
+  transform: scaleX(-1);
+}
+
+.holly i,
+.holly b {
+  position: absolute;
+  display: block;
+}
+
+.holly i {
+  width: 22px;
+  height: 14px;
+  background: #157a4b;
+  border-radius: 0 100% 0 100%;
+  top: 10px;
+}
+
+.holly i:first-child {
+  left: 4px;
+  transform: rotate(-28deg);
+}
+
+.holly i:nth-child(2) {
+  left: 16px;
+  transform: rotate(18deg);
+}
+
+.holly b {
+  width: 8px;
+  height: 8px;
+  background: var(--berry);
+  border-radius: 50%;
+  top: 22px;
+  box-shadow: 0 1px 0 rgb(0 0 0 / 15%);
+}
+
+.holly b:nth-child(3) {
+  left: 16px;
+}
+
+.holly b:nth-child(4) {
+  left: 24px;
+  top: 26px;
+}
+
+.holly b:nth-child(5) {
+  left: 20px;
+  top: 18px;
+}
+
+.hat {
+  text-align: center;
+  font-size: 2rem;
+  margin: 0 0 2px;
+  animation: bob 2.4s ease-in-out infinite;
+}
+
+h1 {
+  font-family: Fredoka, "Trebuchet MS", sans-serif;
+  font-weight: 700;
+  font-size: clamp(1.7rem, 5vw, 2.25rem);
+  line-height: 1.2;
+  margin: 0 0 10px;
+  text-align: center;
+  color: var(--berry-dark);
+}
+
+.lede {
+  text-align: center;
+  color: var(--muted);
+  margin: 0 0 16px;
+  line-height: 1.55;
+  font-weight: 500;
+}
+
+.anon-row {
+  display: flex;
+  justify-content: center;
+}
+
+.anon {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: #d1fae5;
+  color: var(--ok);
+  font-size: 0.86rem;
+  font-weight: 800;
+  padding: 7px 14px;
+  border-radius: 999px;
+  margin: 0 0 22px;
+  border: 2px dashed #34d399;
+}
+
+.field {
+  margin-bottom: 20px;
+}
+
+.q-num {
+  font-size: 0.78rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--berry);
+  font-weight: 800;
+  margin-bottom: 6px;
+}
+
+label {
+  display: block;
+  font-family: Fredoka, "Trebuchet MS", sans-serif;
+  font-size: 1.12rem;
+  font-weight: 600;
+  line-height: 1.35;
+  margin-bottom: 10px;
+}
+
+textarea {
+  width: 100%;
+  min-height: 118px;
+  resize: vertical;
+  border: 2px solid var(--line);
+  background: #fffdf8;
+  border-radius: 18px;
+  padding: 14px 16px;
+  font: 1rem/1.5 Nunito, "Segoe UI", sans-serif;
+  color: var(--ink);
+  outline: none;
+  transition: border-color 0.15s, box-shadow 0.15s, transform 0.15s;
+}
+
+textarea:focus-visible {
+  border-color: var(--berry);
+  box-shadow: 0 0 0 4px rgb(200 30 58 / 14%);
+  transform: translateY(-1px);
+}
+
+.meta {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 6px;
+  font-size: 0.78rem;
+  color: var(--muted);
+  font-weight: 700;
+}
+
+.hp {
+  position: absolute;
+  left: -9999px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
+button[type="submit"] {
+  width: 100%;
+  margin-top: 8px;
+  border: 0;
+  background: linear-gradient(180deg, #e11d48 0%, var(--berry-dark) 100%);
+  color: #fffaf4;
+  font: 800 1.05rem/1 Nunito, "Segoe UI", sans-serif;
+  padding: 16px 20px;
+  border-radius: 999px;
+  cursor: pointer;
+  box-shadow: 0 8px 0 var(--berry-dark), 0 12px 18px rgb(159 18 50 / 28%);
+  transition: transform 0.12s, box-shadow 0.12s;
+}
+
+button[type="submit"]:hover:not(:disabled) {
+  transform: translateY(-2px);
+}
+
+button[type="submit"]:active:not(:disabled) {
+  transform: translateY(2px);
+  box-shadow: 0 4px 0 var(--berry-dark);
+}
+
+button[type="submit"]:focus-visible {
+  outline: 3px solid var(--gold);
+  outline-offset: 3px;
+}
+
+button[type="submit"]:disabled {
+  opacity: 0.7;
+  cursor: wait;
+  box-shadow: none;
+}
+
+.note {
+  text-align: center;
+  color: var(--muted);
+  font-size: 0.86rem;
+  margin: 16px 0 0;
+  font-weight: 700;
+}
+
+.error {
+  margin-top: 14px;
+  background: #ffe4e6;
+  color: #9f1232;
+  border-radius: 14px;
+  padding: 12px 14px;
+  font-size: 0.92rem;
+  font-weight: 700;
+}
+
+.done {
+  text-align: center;
+  padding: 36px 8px 18px;
+}
+
+.done:focus {
+  outline: none;
+}
+
+.done-tree {
+  font-size: 3rem;
+  margin: 0;
+  animation: bob 2.4s ease-in-out infinite;
+}
+
+.done h2 {
+  font-family: Fredoka, "Trebuchet MS", sans-serif;
+  font-size: 2rem;
+  margin: 8px 0 10px;
+  color: var(--berry-dark);
+}
+
+.done p {
+  color: var(--muted);
+  line-height: 1.55;
+  margin: 0;
+  font-weight: 600;
+}
+
+.setup-warn {
+  background: #fef3c7;
+  color: #92400e;
+  border-radius: 14px;
+  padding: 12px 14px;
+  font-size: 0.9rem;
+  margin-bottom: 18px;
+  font-weight: 700;
+}
+
+.site-footer {
+  margin: 18px 0 0;
+  text-align: center;
+  color: #d7f5e3;
+  font-size: 0.82rem;
+  font-weight: 700;
+  text-shadow: 0 1px 0 rgb(0 0 0 / 25%);
+}
+
+.noscript {
+  max-width: 640px;
+  margin: 24px auto;
+  color: var(--cream);
+  text-align: center;
+}
+
+@keyframes snowfall {
+  from {
+    transform: translateY(-10vh) rotate(0deg);
+  }
+
+  to {
+    transform: translateY(110vh) rotate(280deg);
+  }
+}
+
+@keyframes twinkle {
+  from {
+    filter: brightness(0.75);
+    transform: scale(0.92);
+  }
+
+  to {
+    filter: brightness(1.35);
+    transform: scale(1.08);
+  }
+}
+
+@keyframes bob {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-6px);
+  }
+}
+
+@media (max-width: 480px) {
+  .card {
+    padding: 40px 18px 22px;
+    border-radius: 26px;
+  }
+
+  .holly {
+    display: none;
+  }
+
+  .meta {
+    flex-direction: column;
+    gap: 2px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .snowflake,
+  .lights span,
+  .hat,
+  .done-tree,
+  button[type="submit"],
+  textarea {
+    animation: none;
+    transition: none;
+  }
+
+  button[type="submit"]:hover:not(:disabled) {
+    transform: none;
+  }
+}

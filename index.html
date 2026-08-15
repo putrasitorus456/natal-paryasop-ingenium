@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#14532d" />
+    <title>Ketua Panitia Natal — pendapat angkatan</title>
+    <meta
+      name="description"
+      content="Survei anonim angkatan: ketua panitia Natal yang seperti apa, dan ada saran nama atau tidak."
+    />
+    <meta property="og:title" content="Ketua Panitia Natal — pendapat angkatan" />
+    <meta
+      property="og:description"
+      content="Anonim. Spill tipe ketua yang kamu mau, boleh kasih saran nama."
+    />
+    <meta property="og:type" content="website" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@500;700;800&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div class="sky" aria-hidden="true" id="sky"></div>
+    <div class="glow glow-left" aria-hidden="true"></div>
+    <div class="glow glow-right" aria-hidden="true"></div>
+    <main class="wrap">
+      <p class="kicker">🎄 Survei angkatan · anonim 🎁</p>
+      <section class="card">
+        <div class="lights" aria-hidden="true">
+          <span></span><span></span><span></span><span></span><span></span>
+          <span></span><span></span><span></span><span></span><span></span>
+          <span></span><span></span>
+        </div>
+        <div class="holly holly-left" aria-hidden="true">
+          <i></i><i></i><b></b><b></b><b></b>
+        </div>
+        <div class="holly holly-right" aria-hidden="true">
+          <i></i><i></i><b></b><b></b><b></b>
+        </div>
+        <div id="form-view">
+          <p class="hat" aria-hidden="true">🎅</p>
+          <h1>Ketua panitia Natal-nya, yang kayak apa?</h1>
+          <p class="lede">
+            Angkatan lagi kumpulin pendapat. Nggak perlu nama kamu — cuma
+            gambaran ketua yang kamu mau, plus saran nama kalau ada.
+          </p>
+          <div class="anon-row">
+            <p class="anon">Anonim banget · yang nulis nggak ketahuan</p>
+          </div>
+          <div id="setup-warn" class="setup-warn" hidden>
+            Endpoint Google Apps Script belum dikonfigurasi. Isi
+            <code>VITE_APPS_SCRIPT_URL</code> atau <code>src/config.ts</code>.
+          </div>
+          <form id="form" novalidate>
+            <div class="field">
+              <div class="q-num" id="q-num-1">Pertanyaan 1 · wajib</div>
+              <label for="q1" id="label-q1"></label>
+              <textarea
+                id="q1"
+                name="q1"
+                required
+                aria-describedby="q-num-1 meta-q1"
+              ></textarea>
+              <div class="meta" id="meta-q1">
+                <span>Bebas jujur, bebas panjang</span>
+                <span><span id="count-q1">0</span> karakter</span>
+              </div>
+            </div>
+            <div class="field">
+              <div class="q-num" id="q-num-2">Pertanyaan 2 · boleh kosong</div>
+              <label for="q2" id="label-q2"></label>
+              <textarea
+                id="q2"
+                name="q2"
+                aria-describedby="q-num-2 meta-q2"
+              ></textarea>
+              <div class="meta" id="meta-q2">
+                <span>Nggak wajib. Kosong juga dihitung sebagai “tidak ada saran”.</span>
+                <span><span id="count-q2">0</span> karakter</span>
+              </div>
+            </div>
+            <label class="hp" for="website">Jangan diisi</label>
+            <input
+              class="hp"
+              type="text"
+              name="website"
+              id="website"
+              tabindex="-1"
+              autocomplete="off"
+            />
+            <button type="submit" id="submit-btn">Kirim ke kotak Natal</button>
+            <p class="note">Satu kali kirim per orang sudah cukup. Ho ho ho.</p>
+            <div id="error" class="error" role="alert" hidden></div>
+          </form>
+        </div>
+        <div id="done" class="done" hidden tabindex="-1">
+          <p class="done-tree" aria-hidden="true">🎄</p>
+          <h2>Ho ho ho, sudah masuk!</h2>
+          <p>
+            Pendapatmu nyangkut di pohon Natal angkatan. Makasih ya — semoga
+            ketuanya pas dan Natalnya ramai.
+          </p>
+        </div>
+      </section>
+      <p class="site-footer">Rahasia angkatan · bukan voting resmi · cuma dengar-dengar</p>
+    </main>
+    <noscript>
+      <p class="noscript">Form ini memerlukan JavaScript untuk mengirim pendapat.</p>
+    </noscript>
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>
