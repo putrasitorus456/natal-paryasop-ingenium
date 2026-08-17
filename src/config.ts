@@ -17,6 +17,9 @@ export const questions = [
 
 export const NO_NAME_SUGGESTION = "Tidak ada saran";
 
+/** Form open while local time is before this instant (WIB). */
+export const closesAt = "2026-08-17T22:30:00+07:00";
+
 /**
  * Public write-only Apps Script endpoint. It is not a secret:
  * anyone with the form can POST, but they cannot read the sheet.

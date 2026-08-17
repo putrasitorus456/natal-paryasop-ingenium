@@ -26,6 +26,10 @@ function doGet() {
 
 function doPost(e) {
   try {
+    if (new Date() >= new Date("2026-08-17T23:59:00+07:00")) {
+      return json_({ ok: false, error: "Form sudah ditutup." });
+    }
+
     var data = parsePayload_(e);
     var q1 = sanitize_(data.q1);
     var q2 = sanitize_(data.q2);

@@ -4,6 +4,7 @@ import {
   questions,
   scriptUrl,
 } from "./config";
+import { isFormOpen } from "./lib/deadline";
 import {
   isEndpointConfigured,
   submitAnswers,
@@ -150,6 +151,29 @@ function showDone(ui: FormElements): void {
   ui.done.focus();
 }
 
+export function showClosed(): void {
+  const formView = document.getElementById("form-view");
+  const done = document.getElementById("done");
+  const overlay = document.getElementById("status-overlay");
+  const closed = document.getElementById("closed");
+
+  if (formView) {
+    formView.hidden = true;
+  }
+  if (done) {
+    done.hidden = true;
+  }
+  if (overlay) {
+    overlay.hidden = true;
+    overlay.classList.remove("is-in");
+  }
+  if (closed) {
+    closed.hidden = false;
+    closed.classList.add("is-in");
+    closed.focus();
+  }
+}
+
 export function initForm(): void {
   const ui = collectElements();
 
@@ -170,6 +194,11 @@ export function initForm(): void {
 
     if (ui.honeypot.value.trim()) {
       showDone(ui);
+      return;
+    }
+
+    if (!isFormOpen()) {
+      showClosed();
       return;
     }
 
